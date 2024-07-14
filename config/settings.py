@@ -10,20 +10,24 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
+import environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p!vf$fruhh414icd^lvggp^^+!q-pim1-^!lf_*e!l+y+b$6-v'
+SECRET_KEY = env.str("SECRET_KEY", None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG", 0)
 
 ALLOWED_HOSTS = ["*"]
 
@@ -40,11 +44,13 @@ INSTALLED_APPS = [
 
     # built-in apps
     'rest_framework',
+    'ckeditor',
 
     # custom apps
     'apps.common',
     'apps.user',
     'apps.library',
+    'apps.blog',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +147,85 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# email settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
+
+
+# ckeditor settings
+
+KEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono',
+        # 'skin': 'office2013',
+        'toolbar_Basic': [
+            ['Source', '-', 'Bold', 'Italic']
+        ],
+        'toolbar_YourCustomToolbarConfig': [
+            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'forms',
+             'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
+                       'HiddenField']},
+            '/',
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
+                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
+                       'Language']},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert',
+             'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+            '/',
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+            {'name': 'about', 'items': ['About']},
+            '/',  # put this to force next toolbar on new line
+            {'name': 'yourcustomtools', 'items': [
+                # put the name of your editor.ui.addButton here
+                'Preview',
+                'Maximize',
+
+            ]},
+        ],
+        'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
+        # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
+        # 'height': 291,
+        # 'width': '100%',
+        # 'filebrowserWindowHeight': 725,
+        # 'filebrowserWindowWidth': 940,
+        # 'toolbarCanCollapse': True,
+        # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
+        'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            'uploadimage', # the upload image feature
+            # your extra plugins here
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            # 'devtools',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath'
+        ]),
+    }
+}

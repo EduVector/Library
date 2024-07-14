@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Genre, Award, Book, Review, MyBook
+
+admin.site.register(Genre)
+admin.site.register(Award)
+admin.site.register(Book)
+admin.site.register(Review)
+admin.site.register(MyBook)

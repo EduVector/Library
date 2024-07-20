@@ -1,5 +1,7 @@
-from django.db import models
 from django.contrib.auth.models import UserManager, AbstractUser
+from django.db import models
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from apps.common.models import BaseModel
 
 
@@ -11,7 +13,7 @@ class CustumManager(UserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-    
+
     def create_superuser(self, email, password=None, **extra_fields):
         if not password:
             raise TypeError('Password did not come')
@@ -23,8 +25,8 @@ class CustumManager(UserManager):
         return user
 
 
-
 class User(AbstractUser, BaseModel):
+    username = None
     phone_number = models.CharField(max_length=225, null=True, blank=True, db_index=True, unique=True)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
     email = models.EmailField(unique=True, db_index=True, max_length=50)
@@ -39,6 +41,14 @@ class User(AbstractUser, BaseModel):
 
     def __str__(self) -> str:
         return f"{self.id} - {self.get_full_name()}"
+
+    def get_tokens(self):
+        refresh = RefreshToken.for_user(self)
+
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        }
 
 
 class VerifyEmail(BaseModel):

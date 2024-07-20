@@ -22,7 +22,6 @@ class Category(BaseModel):
 
 class Tag(BaseModel):
     name = models.CharField(max_length=225)
-
     slug = models.SlugField(unique=True, null=True, blank=True, max_length=225)
 
     def save(self, *args, **kwargs):  

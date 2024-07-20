@@ -12,7 +12,6 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         fields = (
             "first_name",
             "last_name",
-            "username",
             "email",
             "password",
             "password2"

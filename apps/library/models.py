@@ -1,12 +1,12 @@
 from typing import Iterable
-from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
-from django.template.defaultfilters import slugify
-from ckeditor.fields import RichTextField
-
-from django.utils.translation import gettext_lazy as _
 
 from apps.common.models import BaseModel
+from ckeditor.fields import RichTextField
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db import models
+from django.template.defaultfilters import slugify
+from django.utils.translation import gettext_lazy as _
+
 
 class Genre(BaseModel):
     name = models.CharField(max_length=225)
@@ -14,6 +14,7 @@ class Genre(BaseModel):
 
     def __str__(self) -> str:
         return self.name
+
 
 class Award(BaseModel):
     name = models.CharField(max_length=225)
@@ -41,13 +42,13 @@ class Book(BaseModel):
 
     def __str__(self) -> str:
         return self.name
-    
-    def save(self, *args, **kwargs):  
+
+    def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
 
         return super().save(*args, **kwargs)
-    
+
 
 class Review(BaseModel):
     STATUS = (
@@ -79,4 +80,3 @@ class MyBook(BaseModel):
 
     def __str__(self) -> str:
         return f"{self.user.get_full_name()} - {self.book}"
-

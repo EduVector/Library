@@ -27,3 +27,17 @@
 - select_related() - bu methodni override qilish orqali, queryset ni join qilish mumkin, foreign key bo'lgan fieldlarni bitta connection da olish uchun ishlatiladi
 - prefetch_related() - bu methodni override qilish orqali, queryset ni join qilish mumkin, many to many fieldlarni bitta connection da olish uchun ishlatiladi
 
+
+### Keyingi darsda
+
+## Studentlar uchun
+- Genre va Award modellar uchun API ko'tarish
+
+## O'qituvchi uchun
+- API ni test lashni ko'ramiz
+- Qolgan modellar uchun API ko'tarishni davom etamiz!
+
+
+#### Meme time 🕜:
+- Backendchi bu - Frontni, Backni, Devopsdan oz-moz bilishi kerak va Tester lik qobiliyati ham bo'lishi kerak.
+

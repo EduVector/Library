@@ -43,8 +43,9 @@ class Article(BaseModel):
     tags = models.ManyToManyField(Tag, blank=True)
     author = models.ForeignKey("user.User", on_delete=models.CASCADE, related_name="articles")
     
-    def save(self, *args, **kwargs):  
-        if not self.slug:
+    def save(self, *args, **kwargs):
+        name_ = slugify(self.name)
+        if not self.slug or self.slug != name_:
             self.slug = slugify(self.name)
 
         return super().save(*args, **kwargs)

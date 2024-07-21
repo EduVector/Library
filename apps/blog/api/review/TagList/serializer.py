@@ -1,11 +1,11 @@
 from rest_framework.serializers import ModelSerializer
 
-from apps.blog.models import Category
+from apps.blog.models import Tag
 
 
-class CategoryListSerializer(ModelSerializer):
+class TagListSerializer(ModelSerializer):
     class Meta:
-        model = Category
+        model = Tag
         fields = (
             "id",
             "name",

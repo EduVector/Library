@@ -40,7 +40,9 @@ class User(AbstractUser, BaseModel):
     REQUIRED_FIELDS = []
 
     def __str__(self) -> str:
-        return f"{self.id} - {self.get_full_name()}"
+        if self.get_full_name():
+            return f"{self.id} - {self.get_full_name()}"
+        return self.email
 
     def get_tokens(self):
         refresh = RefreshToken.for_user(self)

@@ -1,0 +1,29 @@
+[
+  {
+    "name": "title",
+    "slug": "title",
+    "description": "Write something",
+    "category": {
+      "id": 1,
+      "name": "Roman",
+      "slug": "roman"
+    },
+    "tags": [
+      {
+        "id": 1,
+        "name": "Roman",
+        "slug": "roman"
+      },
+      {
+        "id": 2,
+        "name": "Roman",
+        "slug": "roman"
+      },
+      {
+        "id": 3,
+        "name": "Roman",
+        "slug": "roman"
+      }
+    ]
+  }
+]

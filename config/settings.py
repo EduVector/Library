@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # built-in apps
+    'drf_yasg',
     'rest_framework',
     'rest_framework_simplejwt',
     'ckeditor',

@@ -1,4 +1,4 @@
-from typing import Iterable
+import uuid
 
 from apps.common.models import BaseModel
 from ckeditor.fields import RichTextField
@@ -45,7 +45,7 @@ class Book(BaseModel):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = f"{slugify(self.name)}-{uuid.uuid4()}"
 
         return super().save(*args, **kwargs)
 
@@ -75,8 +75,26 @@ class Review(BaseModel):
 
 class MyBook(BaseModel):
     user = models.ForeignKey("user.User", on_delete=models.CASCADE, related_name="my_books")
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="favorites")
+    L = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="favorites")
     date_read = models.DateField(null=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.user.get_full_name()} - {self.book}"
+    
+
+
+class FriendRequest(BaseModel):
+    from_user = models.ForeignKey(
+        "user.User",
+        related_name='from_user',
+        on_delete=models.CASCADE
+    )
+
+    to_user = models.ForeignKey(
+        "user.User",
+        related_name='to_user',
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return f"{self.from_user} to {self.to_user}"

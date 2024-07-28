@@ -6,4 +6,6 @@ class IsAuthor(IsAuthenticated):
         Allows access only to author users.
     """
     def has_permission(self, request, view):
-        return bool(request.user.is_author and request.user.is_authenticated)
+        if request.user.is_authenticated:
+            return bool(request.user.is_author)
+        return False

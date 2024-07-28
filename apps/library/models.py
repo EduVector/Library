@@ -1,11 +1,12 @@
 import uuid
 
-from apps.common.models import BaseModel
 from ckeditor.fields import RichTextField
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.utils.translation import gettext_lazy as _
+
+from apps.common.models import BaseModel
 
 
 class Genre(BaseModel):
@@ -75,24 +76,23 @@ class Review(BaseModel):
 
 class MyBook(BaseModel):
     user = models.ForeignKey("user.User", on_delete=models.CASCADE, related_name="my_books")
-    L = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="favorites")
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name="favorites")
     date_read = models.DateField(null=True, blank=True)
 
     def __str__(self) -> str:
         return f"{self.user.get_full_name()} - {self.book}"
-    
 
 
 class FriendRequest(BaseModel):
     from_user = models.ForeignKey(
         "user.User",
-        related_name='from_user',
+        related_name='from_users',
         on_delete=models.CASCADE
     )
 
     to_user = models.ForeignKey(
         "user.User",
-        related_name='to_user',
+        related_name='to_users',
         on_delete=models.CASCADE
     )
 

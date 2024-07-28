@@ -9,6 +9,10 @@
 6. User uchun Login va VerifyEmail API ishlab chiqdik
 7. Category uchun  CRUD API ishlab chiqdik
 8. Article uchun CRUD API ishlab chiqdik
+9. Review uchun CRUD API ishlab chiqdik
+10. Award uchun CRUD API ishlab chiqdik
+11. Book uchun CRUD API ishlab chiqdik
+12. Request Friends uchun Follow, Unfollow va MyFriends API ishlab chiqdik.
 
 
 # Class va Method lar
